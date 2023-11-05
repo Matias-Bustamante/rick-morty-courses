@@ -1,22 +1,30 @@
-import logo from './logo.svg';
+import imagenRickMorty from "./img/rick-morty.png"
+import reqApi from "./api/reqApi";
+import { Fragment, useState } from "react";
 import './App.css';
+import Characters from './Components/Characters'
 
 function App() {
+  const [characters, setCharacters]=useState(null)
+  const BuscarPersonaje = ()=> { 
+   reqApi().then(datos=>{setCharacters(datos)}); 
+  }
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1 className="title">Rick & Morty</h1>
+        { 
+        characters ? ( 
+          <Characters characteres={characters} setCharacters={setCharacters}/>
+        ) : ( 
+          <Fragment> 
+          <img src={imagenRickMorty} alt="Rick & Morty" className="img-home"></img>
+          <button onClick={BuscarPersonaje} className="btn-search">Buscar Personaje</button>
+          </Fragment>
+        )
+        }
+       
+        
       </header>
     </div>
   );
